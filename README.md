@@ -5,7 +5,7 @@
   - https://docs.microsoft.com/en-us/aspnet/mvc/overview/getting-started/getting-started-with-ef-using-mvc/creating-an-entity-framework-data-model-for-an-asp-net-mvc-application
 - All user input is scrubbed to avoid mistakes and SQL injection attacks
 - Database creation code in TSQL has been excluded for privacy reasons
-## Reposity Pattern & Model-View-Controller/Model-View-Viewmodel
+## Entity Framework, Reposity Pattern, and Model-View-Controller/Model-View-Viewmodel
 The application follows a basic repository pattern and uses Linq to pull data into Data Transfer Objects (DTO) at the Data Access Layer (DAL). DTOs are then processed in a unit of work at the controller layer, data is validated and updated DTOs are pumped back into the local repositories, but not treated as effective data until SQL Server returns the all-clear from its own data validation.
 - MVVM is included here because the design is closely related to MVC. Since the application is mostly a basic Create-Read-Update-Delete (CRUD) application, controller methods were mostly empty, or at least only consisted of one or two lines of logic. For read-only pages, a sort of MVVM pattern was followed to eliminate excessive empty controller methods.
 ## Contents
