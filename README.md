@@ -2,6 +2,7 @@
 - The purpose of this repository is to demonstrate my familiarity with SQL based databases, full stack development, and showcase coding styles
 - Code  contains a temporal database schema designed to allow retroactive record changes while keeping audit logs of all changes
 - CSS files used from Microsoft's Contosa .NET/C# MVVC example, but these can be recreated easily.
+  - https://docs.microsoft.com/en-us/aspnet/mvc/overview/getting-started/getting-started-with-ef-using-mvc/creating-an-entity-framework-data-model-for-an-asp-net-mvc-application
 - All user input is scrubbed to avoid mistakes and SQL injection attacks
 - Database creation code in TSQL has been excluded for privacy reasons
 ## Reposity Pattern & Model-View-Controller/Model-View-Viewmodel
