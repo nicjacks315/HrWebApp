@@ -1,0 +1,14 @@
+﻿@model String
+
+@if (String.IsNullOrEmpty(Model))
+{
+    @:<text style="color:gray;">N/A</text>
+}
+else if (Model == "1/1/1900")
+{
+    @:<text style="color:gray;">Open</text>
+}
+else
+{
+    @Model
+}

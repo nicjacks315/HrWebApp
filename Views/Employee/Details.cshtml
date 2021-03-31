@@ -1,0 +1,383 @@
+﻿@model CIS.HR.Models.Employee
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div class="area-rounded">
+    <h4 class="header">Employee</h4>
+    &ensp;
+    @if (ViewBag.ReadOnly)
+    {
+        @:<text class="header-link-disabled">Edit</text>
+    }
+    else
+    {
+        @Html.ActionLink("Edit", "EditEmployee", "Employee")
+    }
+    <table class="table">
+        <tr>
+            <td style="width:50%">
+                <dl class="dl-horizontal">
+                    <dt>
+                        First Name
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.FirstName)
+                    </dd>
+
+                    <dt>
+                        Last Name
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.LastName)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Adp)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Adp)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Username)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Username)
+                    </dd>
+                </dl>
+            </td>
+            <td style="width:50%"></td>
+        </tr>
+    </table>
+</div>
+<div class="area-rounded">
+    <h4 class="header">Contact Preferences</h4>
+    &ensp;
+    @if (ViewBag.ReadOnly)
+    {
+        @:<text class="header-link-disabled">Edit</text>
+    }
+    else
+    {
+        @Html.ActionLink("Edit", "EditContactPreferences", "Employee")
+    } | @Html.ActionLink("History", "HistoryContactPreferences", "Employee")
+    <table class="table">
+        <tr>
+            <td style="width:50%">
+                <dl class="dl-horizontal">
+                    <dt>
+                        Primary Phone
+                    </dt>
+                    <dd>
+                        @Model.ContactPreferencesHistory.EffectiveOrOldest().First().Phone1
+                    </dd>
+                    <dt>
+                        Secondary Phone
+                    </dt>
+                    <dd>
+                        @Model.ContactPreferencesHistory.EffectiveOrOldest().First().Phone2
+                    </dd>
+                    <dt>
+                        Office Extension
+                    </dt>
+                    <dd>
+                        @Model.ContactPreferencesHistory.EffectiveOrOldest().First().Extension
+                    </dd>
+                </dl>
+            </td>
+            <td style="width:50%">
+                <dl class="dl-horizontal">
+                    <dt>
+                        Primary Email
+                    </dt>
+                    <dd>
+                        @Model.ContactPreferencesHistory.EffectiveOrOldest().First().Email1
+                    </dd>
+                    <dt>
+                        Secondary Email
+                    </dt>
+                    <dd>
+                        @Model.ContactPreferencesHistory.EffectiveOrOldest().First().Email2
+                    </dd>
+                    <dt>
+                        Last Updated
+                    </dt>
+                    <dd>
+                        @Model.ContactPreferencesHistory.EffectiveOrOldest().First().DateEffective.ToShortDateString()
+                    </dd>
+                </dl>
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="area-rounded">
+    @{var sa = Model.SupervisorAssignmentHistory.EffectiveOrOldest();}
+    <table style="width:100%">
+        <tr>
+            <td>
+                <h4 class="header">Supervisor</h4>
+                &ensp;
+                @if (ViewBag.ReadOnly)
+                {
+                    @:<text class="header-link-disabled">Change</text>
+                }
+                else
+                {
+                    @Html.ActionLink("Change", "EditSupervisorAssignment", "Employee")
+                } | @Html.ActionLink("History", "HistorySupervisorAssignment", "Employee")
+            </td>
+            <td style="text-align:right;">
+                <text style="color:lightgray;">
+                    @{if (sa.Count > 0)
+                        {
+                            @("Effective:")
+                            @(sa.First().DateEffective == new DateTime(1900, 1, 1) ? "N/A" : sa.First().DateEffective.ToShortDateString())
+                        }
+                    }
+                </text>
+            </td>
+        </tr>
+    </table>
+    @if (sa.Count > 0)
+    {
+        <table class="table">
+            <tr>
+                <td style="width:50%">
+                    <dl class="dl-horizontal">
+                        <dt>
+                            Name
+                        </dt>
+                        <dd>
+                            @(sa.First().Supervisor.FirstName + " " + sa.First().Supervisor.LastName)
+                        </dd>
+                        <dt>
+                            Effective Date
+                        </dt>
+                        <dd>
+                            @(sa.First().DateEffective == new DateTime(1900, 1, 1) ? "N/A" : sa.First().DateEffective.ToShortDateString())
+                        </dd>
+                    </dl>
+                </td>
+                <td style="width:50%">
+                    <dl class="dl-horizontal">
+                        <dt>
+                            Phone
+                        </dt>
+                        <dd>
+                            @(sa.First().Supervisor.ContactPreferencesHistory.EffectiveOrOldest().First().Phone1)
+                        </dd>
+                        <dt>
+                            Extension
+                        </dt>
+                        <dd>
+                            @(sa.First().Supervisor.ContactPreferencesHistory.EffectiveOrOldest().First().Extension)
+                        </dd>
+                    </dl>
+                </td>
+            </tr>
+        </table>
+    }
+</div>
+<div class="area-rounded">
+    @{var ca = Model.CoordinatorAssignmentHistory.EffectiveOrOldest();}
+    <table style="width:100%;border-collapse:collapse;">
+        <tr>
+            <td>
+                <h4 class="header">Coordinator</h4>
+                &ensp;
+                @if (ViewBag.ReadOnly)
+                {
+                    @:<text class="header-link-disabled">Change</text>
+                }
+                else
+                {
+                    @Html.ActionLink("Change", "EditCoordinatorAssignment", "Employee")
+                } | @Html.ActionLink("History", "HistoryCoordinatorAssignment", "Employee")
+            </td>
+            <td style="text-align:right;">
+                <text style="color:lightgray;">
+
+                    @{if (ca.Count > 0)
+                        {
+                            @("Effective:")
+                            @(ca.First().DateEffective == new DateTime(1900, 1, 1) ? "N/A" : ca.First().DateEffective.ToShortDateString())
+                        }
+                    }
+
+                </text>
+            </td>
+        </tr>
+    </table>
+    @if (ca.Count > 0)
+    {
+        <table class="table">
+            <tr>
+                <td style="width:50%">
+                    <dl class="dl-horizontal">
+                        <dt>
+                            Name
+                        </dt>
+                        <dd>
+                            @(ca.First().Coordinator.FirstName + " " + ca.First().Coordinator.LastName)
+                        </dd>
+                        <dt>
+                            Effective Date
+                        </dt>
+                        <dd>
+                            @(ca.First().DateEffective == new DateTime(1900, 1, 1) ? "N/A" : ca.First().DateEffective.ToShortDateString())
+                        </dd>
+                    </dl>
+                </td>
+                <td style="width:50%">
+                    <dl class="dl-horizontal">
+                        <dt>
+                            Phone
+                        </dt>
+                        <dd>
+                            @(ca.First().Coordinator.ContactPreferencesHistory.EffectiveOrOldest().First().Phone1)
+                        </dd>
+                        <dt>
+                            Extension
+                        </dt>
+                        <dd>
+                            @(ca.First().Coordinator.ContactPreferencesHistory.EffectiveOrOldest().First().Extension)
+                        </dd>
+                    </dl>
+                </td>
+            </tr>
+        </table>
+    }
+</div>
+<div class="area-rounded">
+    <h4 style="display:inline-block;">Positions</h4>
+    &ensp;
+    @if (ViewBag.ReadOnly)
+    {
+        @:<text class="header-link-disabled">Create New</text>
+    }
+    else
+    {
+        @Html.ActionLink("New", "NewPositionAssignment", "Employee")
+    } | @Html.ActionLink("History", "HistoryPositionAssignment", "Employee")
+    <table class="table">
+        <tr>
+            <th>
+                Primary
+            </th>
+            <th>
+                Effective Date
+            </th>
+            <th>
+                Started
+            </th>
+            <th>
+                Exited
+            </th>
+            <th>
+                Code
+            </th>
+            <th>
+                Title
+            </th>
+            <th></th>
+        </tr>
+        @foreach (var item in Model.PositionAssignmentHistory.Effective())
+        {
+            <tr>
+                <td>
+                    @Html.CheckBox(item.Id + "_IsPrimary", !String.IsNullOrEmpty(item.DateAsPrimary.ToString()), new { @disabled = "disabled" })
+                </td>
+                <td>
+                    @(item.DateEffective == new DateTime(1900, 1, 1) ? "N/A" : item.DateEffective.ToShortDateString())
+                </td>
+                <td>
+                    @(item.DateStarted?.ToShortDateString() ?? "N/A")
+                </td>
+                <td>
+                    @(item.DateExited?.ToShortDateString() ?? "N/A")
+                </td>
+                <td>
+                    @(item.Position.Code ?? "N/A")
+                </td>
+                <td>
+                    @{
+                        var epd = item.Position.PositionDescriptionHistory.EffectiveOrOldest(item.DateEffective);
+                        @(epd.Count == 0 ? "No Associated Titles" : epd.First().Title);
+                    }
+                </td>
+                <td style="text-align:right;">
+                    @Html.ActionLink("Details", "Index") | <text style="color:gray;">Edit</text>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+<div class="area-rounded">
+    <h4 style="display:inline-block;">Departments</h4>
+    &ensp;
+    <text style="color:gray;display:inline-block;">Create New</text> | <text style="color:gray;display:inline-block;">History</text>
+    <table class="table">
+        <tr>
+            <th>
+                Department
+            </th>
+            <th>
+                Effective Date
+            </th>
+            <th></th>
+        </tr>
+        @foreach (var item in Model.DepartmentAssignmentHistory.EffectiveOrOldest())
+        {
+            <tr>
+                <td>
+                    @item.Department.Abbreviation
+                </td>
+                <td>
+                    @(item.DateEffective == new DateTime(1900, 1, 1) ? "N/A" : item.DateEffective.ToShortDateString())
+                </td>
+                <td style="text-align:right;">
+                    <text style="color:gray;">Edit</text>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+<div class="area-rounded">
+    <h4 style="display:inline-block;">Shift History</h4>
+    &ensp;
+    <text style="color:gray;display:inline-block;">Create New</text>
+    <table class="table">
+        <tr>
+            <th>
+                Type
+            </th>
+            <th>
+                Effective Date
+            </th>
+        </tr>
+        @foreach (var item in Model.ShiftTypeAssignmentHistory.EffectiveOrOldest())
+        {
+        <tr>
+            <td>
+                @item.ShiftType.ShiftTypeName
+            </td>
+            <td>
+                @(item.DateEffective == new DateTime(1900, 1, 1) ? "N/A" : item.DateEffective.ToShortDateString())
+            </td>
+        </tr>
+        }
+    </table>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

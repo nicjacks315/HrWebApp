@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - CIS HR</title>
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/PagedList.css")" rel="stylesheet" type="text/css" />
+
+    @*@{ var userLogon = System.Web.HttpContext.Current.User.Identity.Name; }*@
+    @{ var userName = CIS.HR.Controllers.Util.GetUserFullName(Environment.UserDomainName, Environment.UserName); }
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container"  stlye="height: 128px;">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("CIS", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @*<img src="~/Content/Images/logo_wt_sm_nw.png" style="height:32px; width: auto; margin-top:10px; margin-right:10px;"/>*@
+                <div class="navbar-user-big">
+                    @Html.ActionLink("Welcome, " + userName, "Index", "Home")
+                    @*<li>@Html.ActionLink(userLogon,"Index", "Home")</li>*@
+                </div>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Employees", "Index", "Employee")</li>
+                    <li>@Html.ActionLink("Positions", "Index", "Position")</li>
+                    <li>@Html.ActionLink("Departments", "Index", "Department")</li>
+                    <li>@Html.ActionLink("Administration", "Index", "Administration")</li>
+                </ul>
+                <ul class="navbar-user-small" style="float: right;">
+                    @Html.ActionLink("Welcome, " + userName, "Index", "Home")
+                    @*<li>@Html.ActionLink(userLogon,"Index", "Home")</li>*@
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Community Interface Services - HR Lite</p>
+        </footer>
+    </div>
+</body>
+</html>

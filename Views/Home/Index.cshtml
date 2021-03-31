@@ -1,0 +1,31 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <img src="~/Content/Images/logo_wt.png" class="fillwidth" />
+</div>
+
+@Html.Raw(TempData["alertmessage"])
+
+@*<div class="row">
+        <div class="col-md-4">
+                <h2>Sync Database</h2>
+                <p>
+                    Last sync occured on <b>@ViewBag.LastSync</b>
+                </p>
+                <p><a class="btn btn-default" href="/administration/syncdatabase">Sync Now &raquo;</a></p>
+            </div>
+            <div class="col-md-4">
+                <h2>Read Only</h2>
+                <p>
+                    Database is in a Read-Only state: <b>@ViewBag.ReadOnly</b>
+                </p>
+                <p><a class="btn btn-default" href="/administration/togglereadonly">Toggle &raquo;</a></p>
+            </div>
+            <div class="col-md-4">
+                <h2>Reporting</h2>
+                <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+                <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+            </div>
+    </div>*@

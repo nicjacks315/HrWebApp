@@ -1,0 +1,58 @@
+﻿@{
+    ViewBag.Title = "Administration";
+}
+
+<script type='text/javascript'>
+    function WaitingForSync() {
+        document.getElementById("WaitingForSync").style.display = "block";
+        document.getElementById("SyncButton").onclick = "";
+        document.getElementById("SyncButton").disabled = true;
+        document.getElementById("SyncButton").style.color = "Red";
+        document.getElementById("SyncButton").innerText = "Syncing...";
+    }
+</script>
+
+<h2>@ViewBag.Title</h2>
+
+@*<div class="area-rounded" style="padding-bottom: 10px">*@
+<div class="row">
+
+    <div class="col-md-4" style="height:256px;">
+        <div class="area-rounded-sm"style="height: inherit;">
+            <h2>Sync Database</h2>
+            <p>
+                Update SQL Server with content from FileMaker.<br />
+                Affects information on this site as well as information referenced by the Employee Performance application.<br /><br />
+                Last sync on <b>@ViewBag.LastSync</b>
+            </p>
+            <p style="display: inline-block;">
+                <a id="SyncButton" class="btn btn-default" href="/administration/syncdatabase" onclick="WaitingForSync();">Sync Now &raquo;</a>
+                &nbsp;<img id="WaitingForSync" src="~/Content/Images/loading.gif" style="display:none; width: 32px; height: 32px; float: right;" />
+            </p>
+        </div>
+    </div>
+
+    <div class="col-md-4" style="height:256px;">
+        <div class="area-rounded-sm" style="height: inherit;">
+            <h2>Read Only</h2>
+            <p>
+                Prevent data-entry on this site.<br />
+                Controls whether 'edit' and 'create new' buttons are enabled and restricts dataflow back to FileMaker.<br /><br /><br />
+                Site is currently <b>@ViewBag.ReadOnly</b>
+            </p>
+            <p>
+                <a class="btn btn-default" href="/administration/togglereadonly">Toggle &raquo;</a>
+            </p>
+        </div>
+    </div>
+
+    <div class="col-md-4" style="height:256px;">
+        <div class="area-rounded-sm"style="height: inherit;">
+            <h2>Sharepoint</h2>
+            <p>Verify data in Sharepoint.<br />
+                View the staff list in Sharepoint that is populated by this database and check for discrepancies due delays in syncing.</p><br /><br />
+            <p><a class="btn btn-default" href="https://comintserv.sharepoint.com/office/Lists/ActiveStaff/Default%20View.aspx">Active Staff &raquo;</a></p>
+        </div>
+    </div>
+</div>
+@*</div>*@

@@ -1,0 +1,190 @@
+﻿@model PagedList.IPagedList<CIS.HR.ViewModels.EmployeeIndexViewModel>
+@using PagedList.Mvc;
+
+@functions{
+    public static HtmlString SortArrow(string sortField, string currentSortField, string sortOrder)
+    {
+        if (sortField == currentSortField)
+        {
+            switch (sortOrder)
+            {
+                case "descending":
+                    return new HtmlString("<span class=\"glyphicon glyphicon-arrow-down\" aria-hidden=\"true\"></span>");
+                case "ascending":
+                    return new HtmlString("<span class=\"glyphicon glyphicon-arrow-up\" aria-hidden=\"true\"></span>");
+            }
+        }
+        return new HtmlString("");
+    }
+
+    static public string GetSearchSelected(string paramField, string searchField)
+    {
+        return paramField == searchField ? "selected" : "";
+    }
+}
+
+@{
+    ViewBag.Title = "Employees";
+}
+
+<h2>Employees</h2>
+
+@*<p>
+    @Html.ActionLink("Advanced Search", "Index") |
+    @Html.ActionLink("Reports", "Index") |
+    @if (ViewBag.ReadOnly)
+    {
+        @Html.Raw("<text style=\"color:gray;\">Create New</text>");
+    }
+    else
+    {
+        @Html.ActionLink("Create New", "Create")
+    }
+</p>*@
+
+<div class="area-rounded" style="padding-bottom: 8px;">
+    <h4 class="header" style="float:left;">Find&ensp;</h4>
+    @using (Html.BeginForm("Index", "Employee", FormMethod.Get))
+    {
+        <table class="table-condensed" style="display:inline;">
+            <tr>
+                <td>
+                    <select name="searchField" style="height:26px;">
+                        <option value="employee" @GetSearchSelected(ViewBag.CurrentSearchField,"employee")>Employee</option>
+                        <option value="status" @GetSearchSelected(ViewBag.CurrentSearchField,"status")>Status</option>
+                        <option value="position" @GetSearchSelected(ViewBag.CurrentSearchField,"position")>Position</option>
+                        <option value="shiftType" @GetSearchSelected(ViewBag.CurrentSearchField,"shiftType")>Shift Type</option>
+                        <option value="department" @GetSearchSelected(ViewBag.CurrentSearchField,"department")>Department</option>
+                        <option value="supervisor" @GetSearchSelected(ViewBag.CurrentSearchField,"supervisor")>Supervisor</option>
+                        <option value="coordinator" @GetSearchSelected(ViewBag.CurrentSearchField,"coordinator")>Coordinator</option>
+                    </select>
+                    @*<label>@Html.RadioButton("searchField", "employee", true) Employee</label>&emsp;
+                        <label>@Html.RadioButton("searchField", "status") Status</label>&emsp;
+                        <label>@Html.RadioButton("searchField", "position") Position</label>&emsp;
+                        <label>@Html.RadioButton("searchField", "shiftType") Shift Type</label>&emsp;
+                        <label>@Html.RadioButton("searchField", "department") Department</label>&emsp;
+                        <label>@Html.RadioButton("searchField", "supervisor") Supervisor</label>&emsp;
+                        <label>@Html.RadioButton("searchField", "coordinator") Coordinator</label>&emsp;*@
+                </td>
+                <td>
+                    @Html.TextBox("SearchString", ViewBag.CurrentSearchString as string, new { style = "width:256px" })
+                </td>
+                <td>
+                    <input type="submit" value="Search" />
+                </td>
+                <td>
+                    @if (!String.IsNullOrEmpty(ViewBag.CurrentSearchField))
+                    {
+                        @Html.ActionLink("All", "Index")
+                    }
+                </td>
+            </tr>
+        </table>
+    }
+</div>
+@*<table style="width:100%;">
+    <tr>
+        <td style="vertical-align:middle;">
+            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+        </td>
+        <td style="text-align:right">
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { searchField = ViewBag.CurrentSearchField, searchString = ViewBag.CurrentSearchString, sortField = ViewBag.CurrentSortField, sortOrder = ViewBag.CurrentSortOrder, page }))
+        </td>
+    </tr>
+</table>*@
+<div class="area-rounded">
+    <div style="height: 64px; position: relative;">
+        <div style="float: right; display: inline-block; ">
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { searchField = ViewBag.CurrentSearchField, searchString = ViewBag.CurrentSearchString, sortField = ViewBag.CurrentSortField, sortOrder = ViewBag.CurrentSortOrder, page }))
+        </div>
+        <div style="position: absolute; bottom: 0px;">
+            <h4 class="header">Index</h4>
+            &ensp;
+            <text class="header-link-disabled">Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount</text>
+        </div>
+    </div>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.ActionLink("Employee", "Index", new { searchField = ViewBag.CurrentSearchField, searchString = ViewBag.CurrentSearchString, sortField = "employee", sortOrder = ViewBag.EmployeeSortParam }) @SortArrow("employee", ViewBag.CurrentSortField, ViewBag.CurrentSortOrder)
+            </th>
+            <th>
+                @Html.ActionLink("Status", "Index", new { searchField = ViewBag.CurrentSearchField, searchString = ViewBag.CurrentSearchString, sortField = "status", sortOrder = ViewBag.StatusSortParam }) @SortArrow("status", ViewBag.CurrentSortField, ViewBag.CurrentSortOrder)
+            </th>
+            <th>
+                @Html.ActionLink("Position", "Index", new { searchField = ViewBag.CurrentSearchField, searchString = ViewBag.CurrentSearchString, sortField = "position", sortOrder = ViewBag.PositionSortParam }) @SortArrow("position", ViewBag.CurrentSortField, ViewBag.CurrentSortOrder)
+            </th>
+            <th>
+                @Html.ActionLink("Shift", "Index", new { searchField = ViewBag.CurrentSearchField, searchString = ViewBag.CurrentSearchString, sortField = "shiftType", sortOrder = ViewBag.ShiftTypeSortParam }) @SortArrow("shiftType", ViewBag.CurrentSortField, ViewBag.CurrentSortOrder)
+            </th>
+            <th>
+                @Html.ActionLink("Department", "Index", new { searchField = ViewBag.CurrentSearchField, searchString = ViewBag.CurrentSearchString, sortField = "department", sortOrder = ViewBag.DepartmentSortParam }) @SortArrow("department", ViewBag.CurrentSortField, ViewBag.CurrentSortOrder)
+            </th>
+            <th>
+                @Html.ActionLink("Supervisor", "Index", new { searchField = ViewBag.CurrentSearchField, searchString = ViewBag.CurrentSearchString, sortField = "supervisor", sortOrder = ViewBag.SupervisorSortParam }) @SortArrow("supervisor", ViewBag.CurrentSortField, ViewBag.CurrentSortOrder)
+            </th>
+            <th>
+                @Html.ActionLink("Coordinator", "Index", new { searchField = ViewBag.CurrentSearchField, searchString = ViewBag.CurrentSearchString, sortField = "coordinator", sortOrder = ViewBag.CoordinatorSortParam }) @SortArrow("coordinator", ViewBag.CurrentSortField, ViewBag.CurrentSortOrder)
+            </th>
+            <th></th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <b>@Html.DisplayFor(modelItem => item.LastName), @Html.DisplayFor(modelItem => item.FirstName)</b><br />
+                    <div style="color: gray;">
+                        @Html.DisplayFor(modelItem => item.Adp)
+                        @*@if(ViewBag.IsAdmin)
+                        {*@
+                            <i>
+                                @Html.DisplayFor(modelItem => item.Username)
+                            </i>
+                        @*}*@
+                    </div>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmploymentStatus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PositionCode)<br />
+                    <div style="font-size:10px">@Html.DisplayFor(modelItem => item.PositionTitle)</div>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ShiftType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Department)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Supervisor)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Coordinator)
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "Details2", new { id = item.EmployeeId }) @*|*@
+                    @*@if (ViewBag.ReadOnly)
+                    {
+                        @Html.Raw("<text style=\"color:gray;\">Edit</text>");
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Edit", "Edit", new { id = item.EmployeeId })
+                    } |
+                    @if (ViewBag.ReadOnly)
+                    {
+                        @Html.Raw("<text style=\"color:gray;\">Delete</text>");
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Delete", "Delete", new { id = item.EmployeeId })
+                    }*@
+                </td>
+            </tr>
+        }
+    </table>
+ </div>
+    @*<br />
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { searchField = ViewBag.CurrentSearchField, searchString = ViewBag.CurrentSearchString, sortField = ViewBag.CurrentSortField, sortOrder = ViewBag.CurrentSortOrder, page }))*@

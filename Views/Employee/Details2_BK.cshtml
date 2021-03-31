@@ -1,0 +1,206 @@
+﻿@model CIS.HR.ViewModels.ExtendedEmployeeDetailsViewModel
+
+@{
+    ViewBag.Title = "Details2";
+}
+
+<h2>Details</h2>
+
+<div class="area-rounded">
+    <h4 style="display:inline-block;">Employee</h4>
+    &ensp;
+    @if (ViewBag.ReadOnly)
+    {
+        @:<text class="header-link-disabled">Edit</text>
+    }
+    else
+    {
+        @Html.ActionLink("Edit", "EditEmployee", "Employee")
+    }
+    <table class="table">
+        <tr>
+            <td style="width:50%">
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.FirstName)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.FirstName)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.LastName)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.LastName)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Adp)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Adp)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Username)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Username)
+                    </dd>
+                </dl>
+            </td>
+            <td style="width:50%">
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Departments)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Departments)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.StartDate)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.StartDate)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ShiftType)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.ShiftType)
+                    </dd>
+                </dl>
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="area-rounded">
+    <h4 style="display:inline-block;">Contact Preferences</h4>
+    &ensp;
+    @if (ViewBag.ReadOnly)
+    {
+        @:<text class="header-link-disabled">Edit</text>
+    }
+    else
+    {
+        @Html.ActionLink("Edit", "EditContactPreferences", "Employee")
+    } | @Html.ActionLink("History", "HistoryContactPreferences", "Employee")
+    <table class="table">
+        <tr>
+            <td style="width:50%">
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ContactPreferences.Phone1)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.ContactPreferences.Phone1)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ContactPreferences.Phone2)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.ContactPreferences.Phone2)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ContactPreferences.Extension)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.ContactPreferences.Extension)
+                    </dd>
+                </dl>
+            </td>
+            <td style="width:50%">
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ContactPreferences.Email1)
+                    </dt>
+                    <dd>
+                        <a href="mailto:@(Model.ContactPreferences.Email1))">@(Html.DisplayFor(model => model.ContactPreferences.Email1))</a>
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ContactPreferences.Email2)
+                    </dt>
+                    <dd>
+                        <a href="mailto:@(Model.ContactPreferences.Email2))">@(Html.DisplayFor(model => model.ContactPreferences.Email2))</a>
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ContactPreferences.DateEffective)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.ContactPreferences.DateEffective)
+                    </dd>
+                </dl>
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="area-rounded">
+    <h4 class="header">Positions</h4>
+    &ensp;
+    @if (ViewBag.ReadOnly)
+    {
+        @:<text class="header-link-disabled">Create New</text>
+    }
+    else
+    {
+        @Html.ActionLink("New", "NewPositionAssignment", "Employee")
+    } | @Html.ActionLink("History", "HistoryPositionAssignment", "Employee")
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Positions[0].IsPrimary)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Positions[0].Code)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Positions[0].Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Positions[0].DateEffective)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Positions[0].DateStarted)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Positions[0].DateExited)
+            </th>
+            <th></th>
+        </tr>
+        @foreach (var item in Model.Positions)
+        {
+        <tr>
+            <td>
+                @Html.CheckBox(item.Id + "_IsPrimary", item.IsPrimary, new { @disabled = "disabled" })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Code)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateEffective)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateStarted)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateExited)
+            </td>
+
+            <td style="text-align:right;">
+                @Html.ActionLink("Details", "Index") | <text style="color:gray;">Edit</text>
+            </td>
+        </tr>
+        }
+    </table>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>
