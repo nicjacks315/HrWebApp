@@ -11,8 +11,8 @@ The application follows a basic repository pattern and uses Linq to pull data in
 
 | Folder | Description |
 | --- | --- |
-| Models | Entity classes aggregating database tables |
-| Views | CSHTML webpages |
+| Models | Entity classes aggregating database tables into non-abstracted information.  |
+| Views | CSHTML webpages; The web interface of the application |
 | Controllers | Methods for retrieving data, processign changes, and submitting updated data and records back to repositores |
 | DTO | Data Transfer Objects; Structs with complementary mapping functions used purely to move data from Linq queries to models |
 | DAL | Data Access Layer; Responsible for pulling data from repositories into DTOs, but with the primary responsiblity of organizing data chronologically and viewing at a specified point-in-time as opposed to only-immediately. |
