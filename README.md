@@ -8,13 +8,12 @@
 The application follows a basic repository pattern and uses Linq to pull data into Data Transfer Objects (DTO) at the Data Access Layer (DAL). DTOs are then processed in a unit of work at the controller layer, data is validated and updated DTOs are pumped back into the local repositories, but not treated as effective data until SQL Server returns the all-clear from its ownb data validation.
 ## Contents
 - The contents of this reposity reflects the code and systems built by myself in a larger collaborative Visual Studio solution. It does not represent a solution in its entirety.
+
 | Folder | Description |
 | --- | --- |
 | Models | Entity classes aggregating database tables |
 | Views | CSHTML webpages |
-
 | Controllers | Methods for retrieving data, processign changes, and submitting updated data and records back to repositores |
-
 | DTO | Data Transfer Objects; Structs with complementary mapping functions used purely to move data from Linq queries to models |
 | DAL | Data Access Layer; Responsible for pulling data from repositories into DTOs, but with the primary responsiblity of organizing data chronologically and viewing at a specified point-in-time as opposed to only-immediately. |
 | SQL | Stored procedures and syncing scripts used to deploy this solution in parallel to an existing SQL-based source-of-truth. |
